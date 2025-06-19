@@ -1,364 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ahmet Ulusoy | Portfolio</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmet Ulusoy - Backend Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      body {
-        font-family: "Inter", sans-serif;
-        background-color: #111827; /* Dark blue-gray background */
-        color: #d1d5db; /* Light gray text */
-      }
-      .section-title {
-        color: #ffffff;
-      }
-      .card {
-        background-color: #1f2937; /* Slightly lighter card background */
-        border: 1px solid #374151;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
-          0 4px 6px -2px rgba(0, 0, 0, 0.1);
-      }
-      .tag {
-        background-color: #374151; /* Darker tag background */
-        color: #9ca3af;
-      }
-      .nav-link {
-        transition: color 0.2s;
-      }
-      .nav-link:hover {
-        color: #60a5fa; /* A nice blue for hover */
-      }
-      .icon-link:hover svg {
-        stroke: #60a5fa;
-        transition: stroke 0.2s;
-      }
+        html {
+            scroll-behavior: smooth;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
     </style>
-  </head>
-  <body class="antialiased">
-    <!-- Header & Navigation -->
-    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
-      <nav
-        class="container mx-auto px-6 py-4 flex justify-between items-center"
-      >
-        <a href="#" class="text-2xl font-bold text-white">Ahmet Ulusoy</a>
-        <div class="hidden md:flex space-x-6 items-center">
-          <a href="#about" class="nav-link text-gray-300">About</a>
-          <a href="#projects" class="nav-link text-gray-300">Projects</a>
-          <a href="#skills" class="nav-link text-gray-300">Skills</a>
-          <a href="#contact" class="nav-link text-gray-300">Contact</a>
+</head>
+<body class="gradient-bg">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-slate-800">Ahmet Ulusoy</h1>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-slate-600 hover:text-slate-900 transition-colors">About</a>
+                    <a href="#experience" class="text-slate-600 hover:text-slate-900 transition-colors">Experience</a>
+                    <a href="#skills" class="text-slate-600 hover:text-slate-900 transition-colors">Skills</a>
+                    <a href="#projects" class="text-slate-600 hover:text-slate-900 transition-colors">Projects</a>
+                </div>
+                <!-- Mobile menu button -->
+                <button class="md:hidden text-slate-600" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </nav>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
+                <a href="#about" class="block text-slate-600 hover:text-slate-900 py-2">About</a>
+                <a href="#experience" class="block text-slate-600 hover:text-slate-900 py-2">Experience</a>
+                <a href="#skills" class="block text-slate-600 hover:text-slate-900 py-2">Skills</a>
+                <a href="#projects" class="block text-slate-600 hover:text-slate-900 py-2">Projects</a>
+            </div>
         </div>
-        <button id="mobile-menu-button" class="md:hidden text-white">
-          <i data-lucide="menu"></i>
-        </button>
-      </nav>
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-        <a href="#about" class="block py-2 nav-link text-gray-300">About</a>
-        <a href="#projects" class="block py-2 nav-link text-gray-300"
-          >Projects</a
-        >
-        <a href="#skills" class="block py-2 nav-link text-gray-300">Skills</a>
-        <a href="#contact" class="block py-2 nav-link text-gray-300">Contact</a>
-      </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
-      <!-- Hero Section -->
-      <section id="about" class="text-center py-20">
-        <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4">
-          Software Developer
-        </h1>
-        <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-400">
-          I'm a passionate C# and .NET developer focused on building robust,
-          scalable, and maintainable backend systems and APIs. I enjoy
-          architecting clean solutions and solving complex problems.
-        </p>
-      </section>
-
-      <!-- Projects Section -->
-      <section id="projects" class="py-16">
-        <h2
-          class="section-title text-4xl font-bold text-center mb-12 flex items-center justify-center gap-x-3"
-        >
-          <i data-lucide="folder-kanban"></i>
-          Projects
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Project 1: Hardware Scraper API -->
-          <div class="card rounded-lg p-6 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-2">
-              Hardware Scraper API
-            </h3>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >C#</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >ASP.NET Core 8.0</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >EF Core</span
-              >
+    <!-- Hero Section -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-bold text-slate-800 mb-6">Backend Developer</h1>
+                <p class="text-xl md:text-2xl text-slate-600 mb-8 leading-relaxed">
+                    Passionate Industrial Engineering graduate specializing in backend development with expertise in Java, C#, Spring Boot, and ASP.NET Core
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://github.com/ulusoyahmet" target="_blank" rel="noopener noreferrer" 
+                       class="inline-flex items-center px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg transition-colors">
+                        <i class="fab fa-github mr-2"></i>
+                        View GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/ulusoyahmet/" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors">
+                        <i class="fab fa-linkedin mr-2"></i>
+                        LinkedIn
+                    </a>
+                    <a href="mailto:ulusoyahmet@yahoo.com"
+                       class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Contact Me
+                    </a>
+                    <a href="tel:+905071666740"
+                       class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors">
+                        <i class="fas fa-phone mr-2"></i>
+                        507 166 67 40
+                    </a>
+                </div>
             </div>
-            <ul
-              class="text-gray-400 space-y-3 text-sm list-disc list-inside flex-grow"
-            >
-              <li>
-                Engineered a web scraping API using N-tier architecture for a
-                clear separation of concerns.
-              </li>
-              <li>
-                Implemented Repository and Unit of Work patterns to abstract
-                data access and manage transactions.
-              </li>
-              <li>
-                Developed RESTful API endpoints for scraping hardware products,
-                fully documented with Swagger.
-              </li>
-              <li>
-                Leveraged Dependency Injection for loose coupling and improved
-                testability.
-              </li>
-            </ul>
-          </div>
+        </div>
+    </section>
 
-          <!-- Project 2: Restaurant Automation System -->
-          <div class="card rounded-lg p-6 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-2">
-              Restaurant Automation System
-            </h3>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >C#</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >.NET</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >WinForms</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >SQL Server</span
-              >
+    <!-- About Section -->
+    <section id="about" class="py-16 px-6 bg-white">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center">About Me</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                            I am a passionate Industrial Engineering graduate with a strong focus on backend development. With expertise in Java and C#, I have solid foundations in Spring, Spring Boot, Spring Security, ASP.NET Core, and .NET Framework.
+                        </p>
+                        <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                            I possess strong problem-solving skills, am a fast learner, and continuously strive to improve myself. I am eager to contribute to a dynamic backend development team and create scalable, efficient solutions.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="flex items-center text-slate-600">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                Istanbul, Turkey
+                            </div>
+                            <div class="flex items-center text-slate-600">
+                                <i class="fas fa-graduation-cap mr-2"></i>
+                                Industrial Engineering
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-white border rounded-lg p-6 shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-code text-blue-600 text-2xl mr-3"></i>
+                                <div>
+                                    <h3 class="font-semibold text-slate-800">Backend Focus</h3>
+                                    <p class="text-sm text-slate-600">Specialized in server-side development</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white border rounded-lg p-6 shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-database text-green-600 text-2xl mr-3"></i>
+                                <div>
+                                    <h3 class="font-semibold text-slate-800">Database Expert</h3>
+                                    <p class="text-sm text-slate-600">SQL & NoSQL database management</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white border rounded-lg p-6 shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-server text-purple-600 text-2xl mr-3"></i>
+                                <div>
+                                    <h3 class="font-semibold text-slate-800">API Development</h3>
+                                    <p class="text-sm text-slate-600">RESTful API design & implementation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <ul
-              class="text-gray-400 space-y-3 text-sm list-disc list-inside flex-grow"
-            >
-              <li>
-                Built a comprehensive desktop app to streamline restaurant
-                operations.
-              </li>
-              <li>
-                Features include secure user/role management, menu/category
-                control, and real-time table status tracking.
-              </li>
-              <li>
-                Full order management workflow from creation to payment
-                processing and receipt generation.
-              </li>
-              <li>
-                Utilized N-Tier architecture with a dedicated data access layer
-                using the Repository Pattern.
-              </li>
-            </ul>
-          </div>
+        </div>
+    </section>
 
-          <!-- Project 3: Rent a Car API -->
-          <div class="card rounded-lg p-6 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-2">Rent a Car API</h3>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >C#</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >ASP.NET Core</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >Onion</span
-              >
-              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
-                >CQRS & Mediator</span
-              >
+    <!-- Experience & Education -->
+    <section id="experience" class="py-16 px-6">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center">Experience & Education</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Experience -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                            <i class="fas fa-building mr-2"></i>
+                            Experience
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="bg-white border rounded-lg p-6 shadow-sm">
+                                <h4 class="text-lg font-semibold text-slate-800">R&D and Project Intern</h4>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-slate-600">Caris Design</span>
+                                    <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-sm">Internship</span>
+                                </div>
+                                <div class="flex items-center text-sm text-slate-600">
+                                    <i class="fas fa-calendar mr-2"></i>
+                                    Feb - Apr 2024
+                                </div>
+                            </div>
+                            <div class="bg-white border rounded-lg p-6 shadow-sm">
+                                <h4 class="text-lg font-semibold text-slate-800">ERP Intern</h4>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-slate-600">Hee Tekstil</span>
+                                    <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-sm">Internship</span>
+                                </div>
+                                <div class="flex items-center text-sm text-slate-600">
+                                    <i class="fas fa-calendar mr-2"></i>
+                                    Jul - Aug 2023
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                            <i class="fas fa-graduation-cap mr-2"></i>
+                            Education
+                        </h3>
+                        <div class="bg-white border rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-slate-800">Industrial Engineering</h4>
+                            <p class="text-slate-600 mb-2">İstinye University</p>
+                            <div class="flex items-center text-sm text-slate-600">
+                                <i class="fas fa-calendar mr-2"></i>
+                                October 2020 - July 2024
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <ul
-              class="text-gray-400 space-y-3 text-sm list-disc list-inside flex-grow"
-            >
-              <li>
-                Developed a backend system for a car rental platform using Onion
-                Architecture.
-              </li>
-              <li>
-                Employed CQRS and Mediator patterns for a clean, scalable, and
-                maintainable codebase.
-              </li>
-              <li>
-                Includes modules for car inventory, location-based services,
-                dynamic pricing, and a blogging platform.
-              </li>
-              <li>
-                Provides a statistical reporting API for key business metrics.
-              </li>
-            </ul>
-          </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Skills Section -->
-      <section id="skills" class="py-16">
-        <h2
-          class="section-title text-4xl font-bold text-center mb-12 flex items-center justify-center gap-x-3"
-        >
-          <i data-lucide="cpu"></i>
-          Technologies & Skills
-        </h2>
-        <div class="max-w-4xl mx-auto">
-          <div class="flex flex-wrap justify-center gap-4">
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >C#</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >.NET / ASP.NET Core</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Entity Framework Core</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Java</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >RESTful APIs</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >SQL Server</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Postgresql</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >MySql</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >MongoDb</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >N-Tier Architecture</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Onion Architecture</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Html-Css-Js</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >XUnit</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Test Driven Development</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Repository Pattern</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Unit of Work</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >CQRS & Mediator</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Dependency Injection</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Postman</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Swagger</span
-            >
-            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
-              >Git & GitHub</span
-            >
-          </div>
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 px-6 bg-white">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center">Technical Skills</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4">Programming Languages</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">C#</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Java</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Python</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">JavaScript</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">HTML</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">CSS</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4">Backend Frameworks</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Spring Boot</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">ASP.NET Core</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">.NET Framework</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Spring Security</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4">Databases</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">MySQL</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">PostgreSQL</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">MSSQL</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4">Tools & Technologies</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Git</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">RESTful APIs</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Entity Framework</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Hibernate</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">TDD</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">Unit Testing</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4">Frontend</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">React (Basic)</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">HTML5</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">CSS3</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Contact Section -->
-      <section id="contact" class="text-center py-16">
-        <h2
-          class="section-title text-4xl font-bold text-center mb-6 flex items-center justify-center gap-x-3"
-        >
-          <i data-lucide="mail"></i>
-          Get In Touch
-        </h2>
-        <p class="text-lg max-w-2xl mx-auto text-gray-400 mb-8">
-          I'm always open to new opportunities and collaborations. Feel free to
-          connect with me.
-        </p>
-        <div class="flex justify-center space-x-6">
-          <a
-            href="https://github.com/ulusoyahmet"
-            target="_blank"
-            class="icon-link text-gray-400"
-          >
-            <i data-lucide="github" class="w-8 h-8"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/ulusoyahmet/"
-            target="_blank"
-            class="icon-link text-gray-400"
-          >
-            <i data-lucide="linkedin" class="w-8 h-8"></i>
-          </a>
-          <a
-            href="mailto:ulusoyahmet@yahoo.com"
-            class="icon-link text-gray-400"
-          >
-            <i data-lucide="mail" class="w-8 h-8"></i>
-          </a>
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 px-6">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center">Featured Projects</h2>
+                <div class="space-y-8">
+                    <!-- Hardware Scraper API -->
+                    <div class="bg-white border rounded-lg p-8 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-slate-800 mb-2">Hardware Scraper API</h3>
+                                <p class="text-sm font-medium text-blue-600 mb-4">C#, ASP.NET Core 8.0, Entity Framework Core</p>
+                            </div>
+                            <a href="https://github.com/ulusoyahmet/hardware-scraper-api" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                View on GitHub
+                            </a>
+                        </div>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            A web scraping API developed using N-layered architecture with clear separation of responsibilities between API, business logic, and data access layers. Implemented Repository and Unit of Work patterns for data consistency and maintainability.
+                        </p>
+                        <div>
+                            <h4 class="font-semibold text-slate-800 mb-3">Key Features:</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">RESTful API endpoints for scraping hardware products from URLs</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Fully documented with Swagger</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Dependency Injection for loose coupling</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">N-tier architecture implementation</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Restaurant Automation System -->
+                    <div class="bg-white border rounded-lg p-8 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-slate-800 mb-2">Restaurant Automation System</h3>
+                                <p class="text-sm font-medium text-blue-600 mb-4">C#, .NET, WinForms, SQL Server, N-Tier</p>
+                            </div>
+                            <a href="https://github.com/ulusoyahmet/RestaurantAutomation" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                View on GitHub
+                            </a>
+                        </div>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            A comprehensive desktop application built with C# and .NET Framework to organize and manage all key operations of a restaurant.
+                        </p>
+                        <div>
+                            <h4 class="font-semibold text-slate-800 mb-3">Key Features:</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">User and Role Management with role-based access control</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Menu and Category Management system</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Real-time table status tracking (empty, occupied, reserved)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Complete order processing workflow</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Payment processing and receipt generation</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Three-tier architecture with clear separation of concerns</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Rent a Car API -->
+                    <div class="bg-white border rounded-lg p-8 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-slate-800 mb-2">Rent a Car API</h3>
+                                <p class="text-sm font-medium text-blue-600 mb-4">C#, ASP.NET Core, Web API, Onion Architecture, CQRS & Mediator</p>
+                            </div>
+                            <a href="https://github.com/ulusoyahmet/rentacar-api" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                View on GitHub
+                            </a>
+                        </div>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            A comprehensive backend system built with ASP.NET Core following Onion architecture principles and using CQRS and Mediator patterns for a clean, scalable, and maintainable codebase.
+                        </p>
+                        <div>
+                            <h4 class="font-semibold text-slate-800 mb-3">Key Features:</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Vehicle and Brand Management with detailed specifications</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Location-based services for pickup/return offices</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Dynamic pricing engine with flexible pricing plans</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Content Management System with blog functionality</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Customer feedback and testimonial management</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-slate-600">Statistical reporting with business metrics API</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
-    </main>
+    </section>
+
+    <!-- Certifications -->
+    <section class="py-16 px-6 bg-white">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center">Certifications & Courses</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">C# Algorithm and Programming 101, 102 - Geleceği Yazanlar</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">ASP.NET Core MVC 101, 102 - Geleceği Yazanlar</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">Spring Boot 3, Spring 6 & Hibernate for Beginners by Chad Darby</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">Istanbul Education Academy Full Stack Developer Bootcamp</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">ASP.NET Core API - Rapid API and API Consume by Murat Yücedağ</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">ASP.NET Core API 8.0 Onion Architecture by Murat Yücedağ</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">Python From Zero to Advanced Programming by Mustafa Murat Çoşkun</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-gray-800">
-      <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-        <p>&copy; 2025 ulusoyahmet. All Rights Reserved.</p>
-      </div>
+    <footer class="bg-slate-800 text-white py-8 px-6">
+        <div class="container mx-auto text-center">
+            <p class="text-slate-300">© 2025 Ahmet Ulusoy.</p>
+        </div>
     </footer>
 
     <script>
-      // Initialize Lucide icons
-      lucide.createIcons();
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
 
-      // Mobile menu toggle
-      const menuButton = document.getElementById("mobile-menu-button");
-      const mobileMenu = document.getElementById("mobile-menu");
-      menuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-      });
-
-      // Smooth scrolling for navigation links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth",
-          });
-          // Close mobile menu on link click
-          if (!mobileMenu.classList.contains("hidden")) {
-            mobileMenu.classList.add("hidden");
-          }
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
         });
-      });
     </script>
-  </body>
+</body>
 </html>
