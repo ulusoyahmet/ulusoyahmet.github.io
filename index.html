@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ahmet Ulusoy | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #111827; /* Dark blue-gray background */
+        color: #d1d5db; /* Light gray text */
+      }
+      .section-title {
+        color: #ffffff;
+      }
+      .card {
+        background-color: #1f2937; /* Slightly lighter card background */
+        border: 1px solid #374151;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+          0 4px 6px -2px rgba(0, 0, 0, 0.1);
+      }
+      .tag {
+        background-color: #374151; /* Darker tag background */
+        color: #9ca3af;
+      }
+      .nav-link {
+        transition: color 0.2s;
+      }
+      .nav-link:hover {
+        color: #60a5fa; /* A nice blue for hover */
+      }
+      .icon-link:hover svg {
+        stroke: #60a5fa;
+        transition: stroke 0.2s;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <!-- Header & Navigation -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="#" class="text-2xl font-bold text-white">Your Name</a>
+        <div class="hidden md:flex space-x-6 items-center">
+          <a href="#about" class="nav-link text-gray-300">About</a>
+          <a href="#projects" class="nav-link text-gray-300">Projects</a>
+          <a href="#skills" class="nav-link text-gray-300">Skills</a>
+          <a href="#contact" class="nav-link text-gray-300">Contact</a>
+        </div>
+        <button id="mobile-menu-button" class="md:hidden text-white">
+          <i data-lucide="menu"></i>
+        </button>
+      </nav>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <a href="#about" class="block py-2 nav-link text-gray-300">About</a>
+        <a href="#projects" class="block py-2 nav-link text-gray-300"
+          >Projects</a
+        >
+        <a href="#skills" class="block py-2 nav-link text-gray-300">Skills</a>
+        <a href="#contact" class="block py-2 nav-link text-gray-300">Contact</a>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+      <!-- Hero Section -->
+      <section id="about" class="text-center py-20">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4">
+          Software Developer
+        </h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-400">
+          I'm a passionate C# and .NET developer focused on building robust,
+          scalable, and maintainable backend systems and APIs. I enjoy
+          architecting clean solutions and solving complex problems.
+        </p>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="py-16">
+        <h2
+          class="section-title text-4xl font-bold text-center mb-12 flex items-center justify-center gap-x-3"
+        >
+          <i data-lucide="folder-kanban"></i>
+          Projects
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Project 1: Hardware Scraper API -->
+          <div class="card rounded-lg p-6 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">
+              Hardware Scraper API
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >C#</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >ASP.NET Core 8.0</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >EF Core</span
+              >
+            </div>
+            <ul
+              class="text-gray-400 space-y-3 text-sm list-disc list-inside flex-grow"
+            >
+              <li>
+                Engineered a web scraping API using N-tier architecture for a
+                clear separation of concerns.
+              </li>
+              <li>
+                Implemented Repository and Unit of Work patterns to abstract
+                data access and manage transactions.
+              </li>
+              <li>
+                Developed RESTful API endpoints for scraping hardware products,
+                fully documented with Swagger.
+              </li>
+              <li>
+                Leveraged Dependency Injection for loose coupling and improved
+                testability.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Project 2: Restaurant Automation System -->
+          <div class="card rounded-lg p-6 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">
+              Restaurant Automation System
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >C#</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >.NET</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >WinForms</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >SQL Server</span
+              >
+            </div>
+            <ul
+              class="text-gray-400 space-y-3 text-sm list-disc list-inside flex-grow"
+            >
+              <li>
+                Built a comprehensive desktop app to streamline restaurant
+                operations.
+              </li>
+              <li>
+                Features include secure user/role management, menu/category
+                control, and real-time table status tracking.
+              </li>
+              <li>
+                Full order management workflow from creation to payment
+                processing and receipt generation.
+              </li>
+              <li>
+                Utilized N-Tier architecture with a dedicated data access layer
+                using the Repository Pattern.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Project 3: Rent a Car API -->
+          <div class="card rounded-lg p-6 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Rent a Car API</h3>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >C#</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >ASP.NET Core</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >Onion</span
+              >
+              <span class="tag text-xs font-semibold px-2.5 py-1 rounded-full"
+                >CQRS & Mediator</span
+              >
+            </div>
+            <ul
+              class="text-gray-400 space-y-3 text-sm list-disc list-inside flex-grow"
+            >
+              <li>
+                Developed a backend system for a car rental platform using Onion
+                Architecture.
+              </li>
+              <li>
+                Employed CQRS and Mediator patterns for a clean, scalable, and
+                maintainable codebase.
+              </li>
+              <li>
+                Includes modules for car inventory, location-based services,
+                dynamic pricing, and a blogging platform.
+              </li>
+              <li>
+                Provides a statistical reporting API for key business metrics.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="py-16">
+        <h2
+          class="section-title text-4xl font-bold text-center mb-12 flex items-center justify-center gap-x-3"
+        >
+          <i data-lucide="cpu"></i>
+          Technologies & Skills
+        </h2>
+        <div class="max-w-4xl mx-auto">
+          <div class="flex flex-wrap justify-center gap-4">
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >C#</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >.NET / ASP.NET Core</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Entity Framework Core</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >RESTful APIs</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >SQL Server</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Postgresql</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >MySql</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >MongoDb</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >N-Tier Architecture</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Onion Architecture</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Html-Css-Js</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >XUnit</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Repository Pattern</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Unit of Work</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >CQRS & Mediator</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Dependency Injection</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Postman</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Swagger</span
+            >
+            <span class="tag text-base font-medium px-4 py-2 rounded-lg"
+              >Git & GitHub</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="text-center py-16">
+        <h2
+          class="section-title text-4xl font-bold text-center mb-6 flex items-center justify-center gap-x-3"
+        >
+          <i data-lucide="mail"></i>
+          Get In Touch
+        </h2>
+        <p class="text-lg max-w-2xl mx-auto text-gray-400 mb-8">
+          I'm always open to new opportunities and collaborations. Feel free to
+          connect with me.
+        </p>
+        <div class="flex justify-center space-x-6">
+          <a
+            href="https://github.com/ulusoyahmeh"
+            target="_blank"
+            class="icon-link text-gray-400"
+          >
+            <i data-lucide="github" class="w-8 h-8"></i>
+          </a>
+          <a
+            href="https://linkedin.com/ulusoyahmet"
+            target="_blank"
+            class="icon-link text-gray-400"
+          >
+            <i data-lucide="linkedin" class="w-8 h-8"></i>
+          </a>
+          <a
+            href="mailto:ulusoyahmet@yahoo.com"
+            class="icon-link text-gray-400"
+          >
+            <i data-lucide="mail" class="w-8 h-8"></i>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+      <div class="container mx-auto px-6 py-6 text-center text-gray-500">
+        <p>&copy; 2025 ulusoyahmet. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Mobile menu toggle
+      const menuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      menuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+          // Close mobile menu on link click
+          if (!mobileMenu.classList.contains("hidden")) {
+            mobileMenu.classList.add("hidden");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
