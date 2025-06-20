@@ -1,1548 +1,956 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmet Ulusoy - Backend Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      .gradient-bg {
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-      }
-      .profile-photo {
-        width: 250px;
-        height: 250px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid #e2e8f0;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .profile-photo:hover {
-        transform: scale(1.05);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-      }
-      .lang-switch {
-        background: #f1f5f9;
-        border-radius: 25px;
-        padding: 4px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-      .lang-btn {
-        padding: 8px 16px;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        font-size: 14px;
-      }
-      .lang-btn.active {
-        background: #1e293b;
-        color: white;
-      }
-      .lang-btn:not(.active) {
-        color: #64748b;
-      }
-      .lang-btn:not(.active):hover {
-        background: #e2e8f0;
-      }
-      .hidden {
-        display: none !important;
-      }
-      .nav-item {
-        position: relative;
-        padding: 8px 16px;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        font-weight: 500;
-      }
-      .nav-item:hover {
-        background: #f1f5f9;
-      }
-      .nav-item.active {
-        background: #e2e8f0;
-        font-weight: 600;
-      }
-
-      /* Ensure navigation is always visible on larger screens */
-      @media (min-width: 768px) {
-        .desktop-nav {
-          display: flex !important;
+        html {
+            scroll-behavior: smooth;
         }
-      }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .profile-photo {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        .lang-switch {
+            background: #f1f5f9;
+            border-radius: 25px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .lang-btn.active {
+            background: #1e293b;
+            color: white;
+        }
+        .lang-btn:not(.active) {
+            color: #64748b;
+        }
+        .lang-btn:not(.active):hover {
+            background: #e2e8f0;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .nav-item {
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav-item:hover {
+            background: rgba(241, 245, 249, 0.8);
+            transform: translateY(-1px);
+        }
+        .nav-item.active {
+            background: rgba(226, 232, 240, 0.9);
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        /* Navbar transparency and animation effects */
+        .navbar {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        .navbar.transparent {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.2);
+        }
+        
+        /* Ensure navigation is always visible on larger screens */
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex !important;
+            }
+        }
+        
+        /* Smooth scroll offset for fixed header */
+        section {
+            scroll-margin-top: 80px;
+        }
+        
+        /* Navigation link hover effects */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 4px;
+            left: 50%;
+            background: #1e293b;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-item.active::after,
+        .nav-item:hover::after {
+            width: 80%;
+        }
+        
+        /* Fade in animation for sections */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
-  </head>
-  <body class="gradient-bg">
+</head>
+<body class="gradient-bg">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
-      <div class="container mx-auto px-6 py-4">
-        <nav class="flex justify-between items-center">
-          <h1 class="text-2xl font-bold text-slate-800">Ahmet Ulusoy</h1>
-
-          <!-- Desktop Navigation & Language Switcher -->
-          <div class="flex items-center gap-8">
-            <!-- Navigation Links - ALWAYS VISIBLE ON DESKTOP -->
-            <div class="desktop-nav hidden md:flex items-center gap-6">
-              <a
-                href="#about"
-                class="nav-item text-slate-600 hover:text-slate-900 transition-colors nav-link"
-                data-en="About"
-                data-tr="Hakkımda"
-                >About</a
-              >
-              <a
-                href="#experience"
-                class="nav-item text-slate-600 hover:text-slate-900 transition-colors nav-link"
-                data-en="Experience"
-                data-tr="Deneyim"
-                >Experience</a
-              >
-              <a
-                href="#skills"
-                class="nav-item text-slate-600 hover:text-slate-900 transition-colors nav-link"
-                data-en="Skills"
-                data-tr="Yetenekler"
-                >Skills</a
-              >
-              <a
-                href="#projects"
-                class="nav-item text-slate-600 hover:text-slate-900 transition-colors nav-link"
-                data-en="Projects"
-                data-tr="Projeler"
-                >Projects</a
-              >
+    <header class="navbar bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-slate-800 transition-colors">Ahmet Ulusoy</h1>
+                
+                <!-- Desktop Navigation & Language Switcher -->
+                <div class="flex items-center gap-8">
+                    <!-- Navigation Links - ALWAYS VISIBLE ON DESKTOP -->
+                    <div class="desktop-nav hidden md:flex items-center gap-6">
+                        <a href="#about" class="nav-item text-slate-600 hover:text-slate-900 transition-all nav-link" data-en="About" data-tr="Hakkımda">About</a>
+                        <a href="#experience" class="nav-item text-slate-600 hover:text-slate-900 transition-all nav-link" data-en="Experience" data-tr="Deneyim">Experience</a>
+                        <a href="#skills" class="nav-item text-slate-600 hover:text-slate-900 transition-all nav-link" data-en="Skills" data-tr="Yetenekler">Skills</a>
+                        <a href="#projects" class="nav-item text-slate-600 hover:text-slate-900 transition-all nav-link" data-en="Projects" data-tr="Projeler">Projects</a>
+                    </div>
+                    
+                    <!-- Language Switcher - ALWAYS VISIBLE -->
+                    <div class="lang-switch">
+                        <div class="lang-btn active" onclick="switchLanguage('en')" id="lang-en">EN</div>
+                        <div class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr">TR</div>
+                    </div>
+                    
+                    <!-- Mobile menu button - ONLY ON SMALL SCREENS -->
+                    <button class="md:hidden text-slate-600 transition-colors" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </nav>
+            
+            <!-- Mobile menu - ONLY ON SMALL SCREENS -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 bg-white/90 backdrop-blur-sm border-t pt-4 rounded-lg">
+                <a href="#about" class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50/80 nav-link transition-all" data-en="About" data-tr="Hakkımda">About</a>
+                <a href="#experience" class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50/80 nav-link transition-all" data-en="Experience" data-tr="Deneyim">Experience</a>
+                <a href="#skills" class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50/80 nav-link transition-all" data-en="Skills" data-tr="Yetenekler">Skills</a>
+                <a href="#projects" class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50/80 nav-link transition-all" data-en="Projects" data-tr="Projeler">Projects</a>
             </div>
-
-            <!-- Language Switcher - ALWAYS VISIBLE -->
-            <div class="lang-switch">
-              <div
-                class="lang-btn active"
-                onclick="switchLanguage('en')"
-                id="lang-en"
-              >
-                EN
-              </div>
-              <div class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr">
-                TR
-              </div>
-            </div>
-
-            <!-- Mobile menu button - ONLY ON SMALL SCREENS -->
-            <button
-              class="md:hidden text-slate-600"
-              onclick="toggleMobileMenu()"
-            >
-              <i class="fas fa-bars text-xl"></i>
-            </button>
-          </div>
-        </nav>
-
-        <!-- Mobile menu - ONLY ON SMALL SCREENS -->
-        <div
-          id="mobile-menu"
-          class="hidden md:hidden mt-4 space-y-2 bg-white border-t pt-4"
-        >
-          <a
-            href="#about"
-            class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50 nav-link"
-            data-en="About"
-            data-tr="Hakkımda"
-            >About</a
-          >
-          <a
-            href="#experience"
-            class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50 nav-link"
-            data-en="Experience"
-            data-tr="Deneyim"
-            >Experience</a
-          >
-          <a
-            href="#skills"
-            class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50 nav-link"
-            data-en="Skills"
-            data-tr="Yetenekler"
-            >Skills</a
-          >
-          <a
-            href="#projects"
-            class="block text-slate-600 hover:text-slate-900 py-2 px-4 rounded hover:bg-slate-50 nav-link"
-            data-en="Projects"
-            data-tr="Projeler"
-            >Projects</a
-          >
         </div>
-      </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="py-20 px-6">
-      <div class="container mx-auto text-center">
-        <div class="max-w-4xl mx-auto">
-          <h1
-            class="text-5xl md:text-6xl font-bold text-slate-800 mb-6 hero-title"
-            data-en="Backend Developer"
-            data-tr="Backend Geliştirici"
-          >
-            Backend Developer
-          </h1>
-          <p
-            class="text-xl md:text-2xl text-slate-600 mb-8 leading-relaxed hero-subtitle"
-            data-en="Passionate Industrial Engineering graduate specializing in backend development with expertise in Java, C#, Spring Boot, and ASP.NET Core"
-            data-tr="Backend development konusunda tutkulu bir Endüstri Mühendisliği mezunuyum. Java ve C# konusunda bilgili, Spring, Spring Boot, Spring Security, ASP.NET Core ve .NET Framework'ün temellerine hakimim."
-          >
-            Passionate Industrial Engineering graduate specializing in backend
-            development with expertise in Java, C#, Spring Boot, and ASP.NET
-            Core
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://github.com/ulusoyahmet"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg transition-colors"
-            >
-              <i class="fab fa-github mr-2"></i>
-              <span
-                class="btn-text"
-                data-en="View GitHub"
-                data-tr="GitHub'ı Görüntüle"
-                >View GitHub</span
-              >
-            </a>
-            <a
-              href="https://www.linkedin.com/in/ulusoyahmet/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors"
-            >
-              <i class="fab fa-linkedin mr-2"></i>
-              LinkedIn
-            </a>
-            <a
-              href="mailto:ulusoyahmet@yahoo.com"
-              class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors"
-            >
-              <i class="fas fa-envelope mr-2"></i>
-              <span class="btn-text" data-en="Contact Me" data-tr="İletişim"
-                >Contact Me</span
-              >
-            </a>
-            <a
-              href="tel:+905071666740"
-              class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors"
-            >
-              <i class="fas fa-phone mr-2"></i>
-              <span class="btn-text" data-en="Call Me" data-tr="Ara"
-                >Call Me</span
-              >
-            </a>
-          </div>
+    <section class="py-20 px-6 fade-in">
+        <div class="container mx-auto text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-bold text-slate-800 mb-6 hero-title" 
+                    data-en="Backend Developer" 
+                    data-tr="Backend Geliştirici">Backend Developer</h1>
+                <p class="text-xl md:text-2xl text-slate-600 mb-8 leading-relaxed hero-subtitle" 
+                   data-en="Passionate Industrial Engineering graduate specializing in backend development with expertise in Java, C#, Spring Boot, and ASP.NET Core"
+                   data-tr="Backend development konusunda tutkulu bir Endüstri Mühendisliği mezunuyum. Java ve C# konusunda bilgili, Spring, Spring Boot, Spring Security, ASP.NET Core ve .NET Framework'ün temellerine hakimim.">
+                   Passionate Industrial Engineering graduate specializing in backend development with expertise in Java, C#, Spring Boot, and ASP.NET Core
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://github.com/ulusoyahmet" target="_blank" rel="noopener noreferrer" 
+                       class="inline-flex items-center px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg transition-all transform hover:scale-105">
+                        <i class="fab fa-github mr-2"></i>
+                        <span class="btn-text" data-en="View GitHub" data-tr="GitHub'ı Görüntüle">View GitHub</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ulusoyahmet/" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-all transform hover:scale-105">
+                        <i class="fab fa-linkedin mr-2"></i>
+                        LinkedIn
+                    </a>
+                    <a href="mailto:ulusoyahmet@yahoo.com"
+                       class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-all transform hover:scale-105">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span class="btn-text" data-en="Contact Me" data-tr="İletişim">Contact Me</span>
+                    </a>
+                    <a href="tel:+905071666740"
+                       class="inline-flex items-center px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-all transform hover:scale-105">
+                        <i class="fas fa-phone mr-2"></i>
+                        <span class="btn-text" data-en="507 166 67 40" data-tr="507 166 67 40">507 166 67 40</span>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 px-6 bg-white">
-      <div class="container mx-auto">
-        <div class="max-w-6xl mx-auto">
-          <h2
-            class="text-3xl font-bold text-slate-800 mb-12 text-center section-title"
-            data-en="About Me"
-            data-tr="Hakkımda"
-          >
-            About Me
-          </h2>
-          <div class="grid lg:grid-cols-3 gap-12 items-center">
-            <!-- Profile Photo -->
-            <div class="lg:col-span-1 flex justify-center">
-              <img
-                src="profile1.jpg"
-                alt="Ahmet Ulusoy - Backend Developer"
-                class="profile-photo"
-              />
+    <section id="about" class="py-16 px-6 bg-white fade-in">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center section-title" 
+                    data-en="About Me" 
+                    data-tr="Hakkımda">About Me</h2>
+                <div class="grid lg:grid-cols-3 gap-12 items-center">
+                    <!-- Profile Photo -->
+                    <div class="lg:col-span-1 flex justify-center">
+                        <img src="profile1.jpg" 
+                             alt="Ahmet Ulusoy - Backend Developer" 
+                             class="profile-photo">
+                    </div>
+                    
+                    <!-- About Text -->
+                    <div class="lg:col-span-2">
+                        <div class="mb-8">
+                            <div class="about-text-en">
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                                    I am a passionate Industrial Engineering graduate with a strong focus on backend development. With expertise in Java and C#, I have solid foundations in Spring, Spring Boot, Spring Security, ASP.NET Core, and .NET Framework.
+                                </p>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                                    I possess strong problem-solving skills, am a fast learner, and continuously strive to improve myself. I am eager to contribute to a dynamic backend development team and create scalable, efficient solutions.
+                                </p>
+                            </div>
+                            <div class="about-text-tr hidden">
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                                    Backend development konusunda tutkulu bir Endüstri Mühendisliği mezunuyum. Java ve C# konusunda bilgili, Spring, Spring Boot, Spring Security, ASP.NET Core ve .NET Framework'ün temellerine hakimim.
+                                </p>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                                    Problem çözme becerilerine sahip, hızlı öğrenen biriyim ve sürekli olarak kendimi geliştirmeye çalışıyorum ve dinamik bir backend development ekibine katkı sağlamak istiyorum.
+                                </p>
+                            </div>
+                            <div class="flex flex-wrap gap-4 mb-8">
+                                <div class="flex items-center text-slate-600">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>
+                                    <span class="location-text" data-en="Istanbul, Turkey" data-tr="İstanbul, Türkiye">Istanbul, Turkey</span>
+                                </div>
+                                <div class="flex items-center text-slate-600">
+                                    <i class="fas fa-graduation-cap mr-2"></i>
+                                    <span class="education-text" data-en="Industrial Engineering" data-tr="Endüstri Mühendisliği">Industrial Engineering</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Skills Cards -->
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                                <div class="flex items-center">
+                                    <i class="fas fa-code text-blue-600 text-xl mr-3"></i>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800 text-sm skill-title" data-en="Backend Focus" data-tr="Backend Odaklı">Backend Focus</h3>
+                                        <p class="text-xs text-slate-600 skill-desc" data-en="Server-side development" data-tr="Sunucu tarafı geliştirme">Server-side development</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                                <div class="flex items-center">
+                                    <i class="fas fa-database text-green-600 text-xl mr-3"></i>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800 text-sm skill-title" data-en="Database Expert" data-tr="Veritabanı Uzmanı">Database Expert</h3>
+                                        <p class="text-xs text-slate-600 skill-desc" data-en="SQL & NoSQL management" data-tr="SQL & NoSQL yönetimi">SQL & NoSQL management</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                                <div class="flex items-center">
+                                    <i class="fas fa-server text-purple-600 text-xl mr-3"></i>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800 text-sm skill-title" data-en="API Development" data-tr="API Geliştirme">API Development</h3>
+                                        <p class="text-xs text-slate-600 skill-desc" data-en="RESTful API design" data-tr="RESTful API tasarımı">RESTful API design</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- About Text -->
-            <div class="lg:col-span-2">
-              <div class="mb-8">
-                <div class="about-text-en">
-                  <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                    I am a passionate Industrial Engineering graduate with a
-                    strong focus on backend development. With expertise in Java
-                    and C#, I have solid foundations in Spring, Spring Boot,
-                    Spring Security, ASP.NET Core, and .NET Framework.
-                  </p>
-                  <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                    I possess strong problem-solving skills, am a fast learner,
-                    and continuously strive to improve myself. I am eager to
-                    contribute to a dynamic backend development team and create
-                    scalable, efficient solutions.
-                  </p>
-                </div>
-                <div class="about-text-tr hidden">
-                  <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                    Backend development konusunda tutkulu bir Endüstri
-                    Mühendisliği mezunuyum. Java ve C# konusunda bilgili,
-                    Spring, Spring Boot, Spring Security, ASP.NET Core ve .NET
-                    Framework'ün temellerine hakimim.
-                  </p>
-                  <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                    Problem çözme becerilerine sahip, hızlı öğrenen biriyim ve
-                    sürekli olarak kendimi geliştirmeye çalışıyorum ve dinamik
-                    bir backend development ekibine katkı sağlamak istiyorum.
-                  </p>
-                </div>
-                <div class="flex flex-wrap gap-4 mb-8">
-                  <div class="flex items-center text-slate-600">
-                    <i class="fas fa-map-marker-alt mr-2"></i>
-                    <span
-                      class="location-text"
-                      data-en="Istanbul, Turkey"
-                      data-tr="İstanbul, Türkiye"
-                      >Istanbul, Turkey</span
-                    >
-                  </div>
-                  <div class="flex items-center text-slate-600">
-                    <i class="fas fa-graduation-cap mr-2"></i>
-                    <span
-                      class="education-text"
-                      data-en="Industrial Engineering"
-                      data-tr="Endüstri Mühendisliği"
-                      >Industrial Engineering</span
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <!-- Skills Cards -->
-              <div class="grid md:grid-cols-3 gap-4">
-                <div class="bg-white border rounded-lg p-4 shadow-sm">
-                  <div class="flex items-center">
-                    <i class="fas fa-code text-blue-600 text-xl mr-3"></i>
-                    <div>
-                      <h3
-                        class="font-semibold text-slate-800 text-sm skill-title"
-                        data-en="Backend Focus"
-                        data-tr="Backend Odaklı"
-                      >
-                        Backend Focus
-                      </h3>
-                      <p
-                        class="text-xs text-slate-600 skill-desc"
-                        data-en="Server-side development"
-                        data-tr="Sunucu tarafı geliştirme"
-                      >
-                        Server-side development
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="bg-white border rounded-lg p-4 shadow-sm">
-                  <div class="flex items-center">
-                    <i class="fas fa-database text-green-600 text-xl mr-3"></i>
-                    <div>
-                      <h3
-                        class="font-semibold text-slate-800 text-sm skill-title"
-                        data-en="Database Expert"
-                        data-tr="Veritabanı Uzmanı"
-                      >
-                        Database Expert
-                      </h3>
-                      <p
-                        class="text-xs text-slate-600 skill-desc"
-                        data-en="SQL & NoSQL management"
-                        data-tr="SQL & NoSQL yönetimi"
-                      >
-                        SQL & NoSQL management
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="bg-white border rounded-lg p-4 shadow-sm">
-                  <div class="flex items-center">
-                    <i class="fas fa-server text-purple-600 text-xl mr-3"></i>
-                    <div>
-                      <h3
-                        class="font-semibold text-slate-800 text-sm skill-title"
-                        data-en="API Development"
-                        data-tr="API Geliştirme"
-                      >
-                        API Development
-                      </h3>
-                      <p
-                        class="text-xs text-slate-600 skill-desc"
-                        data-en="RESTful API design"
-                        data-tr="RESTful API tasarımı"
-                      >
-                        RESTful API design
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- Experience & Education -->
-    <section id="experience" class="py-16 px-6">
-      <div class="container mx-auto">
-        <div class="max-w-4xl mx-auto">
-          <h2
-            class="text-3xl font-bold text-slate-800 mb-12 text-center section-title"
-            data-en="Experience & Education"
-            data-tr="Deneyim & Eğitim"
-          >
-            Experience & Education
-          </h2>
-          <div class="grid md:grid-cols-2 gap-8">
-            <!-- Experience -->
-            <div>
-              <h3
-                class="text-xl font-semibold text-slate-800 mb-6 flex items-center"
-              >
-                <i class="fas fa-building mr-2"></i>
-                <span
-                  class="subsection-title"
-                  data-en="Experience"
-                  data-tr="Deneyim"
-                  >Experience</span
-                >
-              </h3>
-              <div class="space-y-6">
-                <div class="bg-white border rounded-lg p-6 shadow-sm">
-                  <h4
-                    class="text-lg font-semibold text-slate-800 job-title"
-                    data-en="R&D and Project Intern"
-                    data-tr="Arge ve Proje Stajyeri"
-                  >
-                    R&D and Project Intern
-                  </h4>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-slate-600">Caris Design</span>
-                    <span
-                      class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-sm job-type"
-                      data-en="Internship"
-                      data-tr="Staj"
-                      >Internship</span
-                    >
-                  </div>
-                  <div class="flex items-center text-sm text-slate-600">
-                    <i class="fas fa-calendar mr-2"></i>
-                    <span
-                      class="date-text"
-                      data-en="Feb - Apr 2024"
-                      data-tr="Şub - Nis 2024"
-                      >Feb - Apr 2024</span
-                    >
-                  </div>
-                </div>
-                <div class="bg-white border rounded-lg p-6 shadow-sm">
-                  <h4
-                    class="text-lg font-semibold text-slate-800 job-title"
-                    data-en="ERP Intern"
-                    data-tr="ERP Stajyeri"
-                  >
-                    ERP Intern
-                  </h4>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-slate-600">Hee Tekstil</span>
-                    <span
-                      class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-sm job-type"
-                      data-en="Internship"
-                      data-tr="Staj"
-                      >Internship</span
-                    >
-                  </div>
-                  <div class="flex items-center text-sm text-slate-600">
-                    <i class="fas fa-calendar mr-2"></i>
-                    <span
-                      class="date-text"
-                      data-en="Jul - Aug 2023"
-                      data-tr="Tem - Ağu 2023"
-                      >Jul - Aug 2023</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
+    <section id="experience" class="py-16 px-6 fade-in">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center section-title" 
+                    data-en="Experience & Education" 
+                    data-tr="Deneyim & Eğitim">Experience & Education</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Experience -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                            <i class="fas fa-building mr-2"></i>
+                            <span class="subsection-title" data-en="Experience" data-tr="Deneyim">Experience</span>
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="bg-white border rounded-lg p-6 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                                <h4 class="text-lg font-semibold text-slate-800 job-title" 
+                                    data-en="R&D and Project Intern" 
+                                    data-tr="Arge ve Proje Stajyeri">R&D and Project Intern</h4>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-slate-600">Caris Design</span>
+                                    <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-sm job-type" 
+                                          data-en="Internship" 
+                                          data-tr="Staj">Internship</span>
+                                </div>
+                                <div class="flex items-center text-sm text-slate-600">
+                                    <i class="fas fa-calendar mr-2"></i>
+                                    <span class="date-text" data-en="Feb - Apr 2024" data-tr="Şub - Nis 2024">Feb - Apr 2024</span>
+                                </div>
+                            </div>
+                            <div class="bg-white border rounded-lg p-6 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                                <h4 class="text-lg font-semibold text-slate-800 job-title" 
+                                    data-en="ERP Intern" 
+                                    data-tr="ERP Stajyeri">ERP Intern</h4>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-slate-600">Hee Tekstil</span>
+                                    <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-sm job-type" 
+                                          data-en="Internship" 
+                                          data-tr="Staj">Internship</span>
+                                </div>
+                                <div class="flex items-center text-sm text-slate-600">
+                                    <i class="fas fa-calendar mr-2"></i>
+                                    <span class="date-text" data-en="Jul - Aug 2023" data-tr="Tem - Ağu 2023">Jul - Aug 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Education -->
-            <div>
-              <h3
-                class="text-xl font-semibold text-slate-800 mb-6 flex items-center"
-              >
-                <i class="fas fa-graduation-cap mr-2"></i>
-                <span
-                  class="subsection-title"
-                  data-en="Education"
-                  data-tr="Eğitim"
-                  >Education</span
-                >
-              </h3>
-              <div class="bg-white border rounded-lg p-6 shadow-sm">
-                <h4
-                  class="text-lg font-semibold text-slate-800 degree-title"
-                  data-en="Industrial Engineering"
-                  data-tr="Endüstri Mühendisliği"
-                >
-                  Industrial Engineering
-                </h4>
-                <p class="text-slate-600 mb-2">İstinye Üniversitesi</p>
-                <div class="flex items-center text-sm text-slate-600">
-                  <i class="fas fa-calendar mr-2"></i>
-                  <span
-                    class="date-text"
-                    data-en="October 2020 - July 2024"
-                    data-tr="Ekim 2020 - Temmuz 2024"
-                    >October 2020 - July 2024</span
-                  >
+                    <!-- Education -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-6 flex items-center">
+                            <i class="fas fa-graduation-cap mr-2"></i>
+                            <span class="subsection-title" data-en="Education" data-tr="Eğitim">Education</span>
+                        </h3>
+                        <div class="bg-white border rounded-lg p-6 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                            <h4 class="text-lg font-semibold text-slate-800 degree-title" 
+                                data-en="Industrial Engineering" 
+                                data-tr="Endüstri Mühendisliği">Industrial Engineering</h4>
+                            <p class="text-slate-600 mb-2">İstinye Üniversitesi</p>
+                            <div class="flex items-center text-sm text-slate-600">
+                                <i class="fas fa-calendar mr-2"></i>
+                                <span class="date-text" data-en="October 2020 - July 2024" data-tr="Ekim 2020 - Temmuz 2024">October 2020 - July 2024</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-16 px-6 bg-white">
-      <div class="container mx-auto">
-        <div class="max-w-6xl mx-auto">
-          <h2
-            class="text-3xl font-bold text-slate-800 mb-12 text-center section-title"
-            data-en="Technical Skills"
-            data-tr="Teknik Yetenekler"
-          >
-            Technical Skills
-          </h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
-              <h3
-                class="text-lg font-semibold text-slate-800 mb-4 skill-category"
-                data-en="Programming Languages"
-                data-tr="Programlama Dilleri"
-              >
-                Programming Languages
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >C#</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Java</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Python</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >JavaScript</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >HTML</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >CSS</span
-                >
-              </div>
+    <section id="skills" class="py-16 px-6 bg-white fade-in">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center section-title" 
+                    data-en="Technical Skills" 
+                    data-tr="Teknik Yetenekler">Technical Skills</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full transition-all hover:shadow-md hover:scale-105">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4 skill-category" 
+                            data-en="Programming Languages" 
+                            data-tr="Programlama Dilleri">Programming Languages</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">C#</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Java</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Python</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">JavaScript</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">HTML</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">CSS</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full transition-all hover:shadow-md hover:scale-105">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4 skill-category" 
+                            data-en="Backend Frameworks" 
+                            data-tr="Backend Framework'leri">Backend Frameworks</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Spring Boot</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">ASP.NET Core</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">.NET Framework</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Spring Security</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full transition-all hover:shadow-md hover:scale-105">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4 skill-category" 
+                            data-en="Databases" 
+                            data-tr="Veritabanları">Databases</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">MySQL</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">PostgreSQL</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">MSSQL</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">MongoDB</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full transition-all hover:shadow-md hover:scale-105">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4 skill-category" 
+                            data-en="Tools & Technologies" 
+                            data-tr="Araçlar & Teknolojiler">Tools & Technologies</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Git</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">RESTful APIs</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Entity Framework</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Hibernate</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">TDD</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">Unit Testing</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-6 shadow-sm h-full transition-all hover:shadow-md hover:scale-105">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4 skill-category" 
+                            data-en="Frontend" 
+                            data-tr="Frontend">Frontend</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">React (Basic)</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">HTML5</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">CSS3</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm transition-all hover:bg-slate-200">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
-              <h3
-                class="text-lg font-semibold text-slate-800 mb-4 skill-category"
-                data-en="Backend Frameworks"
-                data-tr="Backend Framework'leri"
-              >
-                Backend Frameworks
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Spring Boot</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >ASP.NET Core</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >.NET Framework</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Spring Security</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
-              <h3
-                class="text-lg font-semibold text-slate-800 mb-4 skill-category"
-                data-en="Databases"
-                data-tr="Veritabanları"
-              >
-                Databases
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >MySQL</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >PostgreSQL</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >MSSQL</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >MongoDB</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
-              <h3
-                class="text-lg font-semibold text-slate-800 mb-4 skill-category"
-                data-en="Tools & Technologies"
-                data-tr="Araçlar & Teknolojiler"
-              >
-                Tools & Technologies
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Git</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >RESTful APIs</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Entity Framework</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Hibernate</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >TDD</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >Unit Testing</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-6 shadow-sm h-full">
-              <h3
-                class="text-lg font-semibold text-slate-800 mb-4 skill-category"
-                data-en="Frontend"
-                data-tr="Frontend"
-              >
-                Frontend
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >React (Basic)</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >HTML5</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >CSS3</span
-                >
-                <span
-                  class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm"
-                  >JavaScript</span
-                >
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-16 px-6">
-      <div class="container mx-auto">
-        <div class="max-w-6xl mx-auto">
-          <h2
-            class="text-3xl font-bold text-slate-800 mb-12 text-center section-title"
-            data-en="Featured Projects"
-            data-tr="Öne Çıkan Projeler"
-          >
-            Featured Projects
-          </h2>
-          <div class="space-y-8">
-            <!-- Hardware Scraper API -->
-            <div class="bg-white border rounded-lg p-8 shadow-sm">
-              <div class="flex justify-between items-start mb-4">
-                <div>
-                  <h3 class="text-xl font-semibold text-slate-800 mb-2">
-                    Hardware Scraper API
-                  </h3>
-                  <p class="text-sm font-medium text-blue-600 mb-4">
-                    C#, ASP.NET Core 8.0, Entity Framework Core
-                  </p>
-                </div>
-                <a
-                  href="https://github.com/ulusoyahmet/hardware-scraper-api"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors"
-                >
-                  <i class="fas fa-external-link-alt mr-2"></i>
-                  <span
-                    class="btn-text"
-                    data-en="View on GitHub"
-                    data-tr="GitHub'da Görüntüle"
-                    >View on GitHub</span
-                  >
-                </a>
-              </div>
-              <div class="project-desc-en">
-                <p class="text-slate-600 mb-4 leading-relaxed">
-                  A web scraping API developed using N-layered architecture with
-                  clear separation of responsibilities between API, business
-                  logic, and data access layers. Implemented Repository and Unit
-                  of Work patterns for data consistency and maintainability.
-                </p>
-                <div>
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Key Features:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >RESTful API endpoints for scraping hardware products
-                        from URLs and retrieving product details</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >Fully documented with Swagger for comprehensive API
-                        documentation</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >Dependency Injection for loose coupling and improved
-                        testability throughout the application</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >Repository and Unit of Work patterns for abstracting
-                        data access logic and managing transactions</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-desc-tr hidden">
-                <p class="text-slate-600 mb-4 leading-relaxed">
-                  API, iş mantığı ve veri erişim katmanları arasında net bir
-                  sorumluluk ayrımı sağlamak için N-katmanlı mimari kullanılarak
-                  bir web kazıma API'si geliştirildi. Veri erişim mantığını
-                  soyutlamak ve işlemleri yönetmek için Repository ve Unit of
-                  Work desenleri uygulandı, bu sayede veri tutarlılığı ve
-                  sürdürülebilirlik sağlandı.
-                </p>
-                <div>
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Temel Özellikler:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >URL'lerden donanım ürünlerini kazımak ve ürün
-                        detaylarını getirmek için RESTful API uç noktaları</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >Swagger ile tamamen belgelendi</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >Uygulama genelinde loose coupling ve geliştirilmiş test
-                        edilebilirlik için Bağımlılık Enjeksiyonu</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        >Veri erişim mantığını soyutlamak ve işlemleri yönetmek
-                        için Repository ve Unit of Work desenleri</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+    <section id="projects" class="py-16 px-6 fade-in">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center section-title" 
+                    data-en="Featured Projects" 
+                    data-tr="Öne Çıkan Projeler">Featured Projects</h2>
+                <div class="space-y-8">
+                    <!-- Hardware Scraper API -->
+                    <div class="bg-white border rounded-lg p-8 shadow-sm transition-all hover:shadow-lg hover:scale-[1.02]">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-slate-800 mb-2">Hardware Scraper API</h3>
+                                <p class="text-sm font-medium text-blue-600 mb-4">C#, ASP.NET Core 8.0, Entity Framework Core</p>
+                            </div>
+                            <a href="https://github.com/ulusoyahmet/hardware-scraper-api" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-all transform hover:scale-105">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span class="btn-text" data-en="View on GitHub" data-tr="GitHub'da Görüntüle">View on GitHub</span>
+                            </a>
+                        </div>
+                        <div class="project-desc-en">
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                A web scraping API developed using N-layered architecture with clear separation of responsibilities between API, business logic, and data access layers. Implemented Repository and Unit of Work patterns for data consistency and maintainability.
+                            </p>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 mb-3">Key Features:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">RESTful API endpoints for scraping hardware products from URLs and retrieving product details</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">Fully documented with Swagger for comprehensive API documentation</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">Dependency Injection for loose coupling and improved testability throughout the application</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">Repository and Unit of Work patterns for abstracting data access logic and managing transactions</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-desc-tr hidden">
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                API, iş mantığı ve veri erişim katmanları arasında net bir sorumluluk ayrımı sağlamak için N-katmanlı mimari kullanılarak bir web kazıma API'si geliştirildi. Veri erişim mantığını soyutlamak ve işlemleri yönetmek için Repository ve Unit of Work desenleri uygulandı, bu sayede veri tutarlılığı ve sürdürülebilirlik sağlandı.
+                            </p>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 mb-3">Temel Özellikler:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">URL'lerden donanım ürünlerini kazımak ve ürün detaylarını getirmek için RESTful API uç noktaları</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">Swagger ile tamamen belgelendi</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">Uygulama genelinde loose coupling ve geliştirilmiş test edilebilirlik için Bağımlılık Enjeksiyonu</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600">Veri erişim mantığını soyutlamak ve işlemleri yönetmek için Repository ve Unit of Work desenleri</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Restaurant Automation System -->
-            <div class="bg-white border rounded-lg p-8 shadow-sm">
-              <div class="flex justify-between items-start mb-4">
-                <div>
-                  <h3 class="text-xl font-semibold text-slate-800 mb-2">
-                    Restaurant Automation System
-                  </h3>
-                  <p class="text-sm font-medium text-blue-600 mb-4">
-                    C#, .NET, WinForms, SQL Server, N-Tier
-                  </p>
-                </div>
-                <a
-                  href="https://github.com/ulusoyahmet/RestaurantAutomation"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors"
-                >
-                  <i class="fas fa-external-link-alt mr-2"></i>
-                  <span
-                    class="btn-text"
-                    data-en="View on GitHub"
-                    data-tr="GitHub'da Görüntüle"
-                    >View on GitHub</span
-                  >
-                </a>
-              </div>
-              <div class="project-desc-en">
-                <p class="text-slate-600 mb-4 leading-relaxed">
-                  A comprehensive desktop application built with C# and .NET
-                  Framework to organize and manage all key operations of a
-                  restaurant.
-                </p>
-                <div class="mb-6">
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Key Features:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>User and Role Management:</strong> Secure login
-                        system with role-based access control allowing different
-                        permissions for managers and staff</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Menu and Category Management:</strong> Flexible
-                        system for creating, updating, and organizing menu items
-                        and categories</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Table Management:</strong> Real-time tracking
-                        of table status (empty, occupied, reserved)</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Order Management:</strong> Complete order
-                        processing workflow from taking new orders to tracking
-                        existing orders and managing order details</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Payment Processing:</strong> Customer payment
-                        processing and receipt generation functionality</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Architecture:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Presentation Layer:</strong> User-friendly
-                        interface developed with Windows Forms</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Business Layer:</strong> Contains all business
-                        logic, services, and data validation rules to implement
-                        application requirements</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Data Access Layer:</strong> Manages all
-                        database interactions using Repository Pattern with
-                        Entity Framework Core, providing an abstraction layer
-                        over the database</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-desc-tr hidden">
-                <p class="text-slate-600 mb-4 leading-relaxed">
-                  Bu proje, bir restoranın tüm kilit operasyonlarını düzenlemek
-                  ve yönetmek için C# ve .NET Framework ile oluşturulmuş
-                  kapsamlı bir masaüstü uygulamasıdır.
-                </p>
-                <div class="mb-6">
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Temel Özellikler:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Kullanıcı ve Rol Yönetimi:</strong> Yöneticiler
-                        ve personel için farklı izinlere olanak tanıyan, rol
-                        tabanlı erişim kontrolüne sahip güvenli bir giriş
-                        sistemi</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Menü ve Kategori Yönetimi:</strong> Menü
-                        öğelerini ve kategorilerini oluşturmak, güncellemek ve
-                        düzenlemek için esnek bir sistem</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Masa Yönetimi:</strong> Masa durumunun (boş,
-                        dolu, rezerve) gerçek zamanlı takibi</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Sipariş Yönetimi:</strong> Yeni sipariş
-                        almaktan mevcut siparişleri takip etmeye ve sipariş
-                        detaylarını yönetmeye kadar eksiksiz bir sipariş işleme
-                        akışı</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Ödeme İşlemleri:</strong> Müşteri ödemelerini
-                        işleme ve fiş oluşturma işlevselliği</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-semibold text-slate-800 mb-3">Mimari:</h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Sunum Katmanı:</strong> Windows Forms ile
-                        geliştirilmiş kullanıcı dostu bir arayüz</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>İş Katmanı:</strong> Uygulama gereksinimlerini
-                        uygulamak için tüm iş mantığını, hizmetleri ve veri
-                        doğrulama kurallarını içerir</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Veri Erişim Katmanı:</strong> Veritabanı
-                        üzerinde bir soyutlama katmanı sağlayan Entity Framework
-                        Core ile Repository Deseni kullanarak tüm veritabanı
-                        etkileşimlerini yönetir</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+                    <!-- Restaurant Automation System -->
+                    <div class="bg-white border rounded-lg p-8 shadow-sm transition-all hover:shadow-lg hover:scale-[1.02]">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-slate-800 mb-2">Restaurant Automation System</h3>
+                                <p class="text-sm font-medium text-blue-600 mb-4">C#, .NET, WinForms, SQL Server, N-Tier</p>
+                            </div>
+                            <a href="https://github.com/ulusoyahmet/RestaurantAutomation" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-all transform hover:scale-105">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span class="btn-text" data-en="View on GitHub" data-tr="GitHub'da Görüntüle">View on GitHub</span>
+                            </a>
+                        </div>
+                        <div class="project-desc-en">
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                A comprehensive desktop application built with C# and .NET Framework to organize and manage all key operations of a restaurant.
+                            </p>
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-slate-800 mb-3">Key Features:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>User and Role Management:</strong> Secure login system with role-based access control allowing different permissions for managers and staff</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Menu and Category Management:</strong> Flexible system for creating, updating, and organizing menu items and categories</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Table Management:</strong> Real-time tracking of table status (empty, occupied, reserved)</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Order Management:</strong> Complete order processing workflow from taking new orders to tracking existing orders and managing order details</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Payment Processing:</strong> Customer payment processing and receipt generation functionality</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 mb-3">Architecture:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Presentation Layer:</strong> User-friendly interface developed with Windows Forms</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Business Layer:</strong> Contains all business logic, services, and data validation rules to implement application requirements</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Data Access Layer:</strong> Manages all database interactions using Repository Pattern with Entity Framework Core, providing an abstraction layer over the database</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-desc-tr hidden">
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                Bu proje, bir restoranın tüm kilit operasyonlarını düzenlemek ve yönetmek için C# ve .NET Framework ile oluşturulmuş kapsamlı bir masaüstü uygulamasıdır.
+                            </p>
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-slate-800 mb-3">Temel Özellikler:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Kullanıcı ve Rol Yönetimi:</strong> Yöneticiler ve personel için farklı izinlere olanak tanıyan, rol tabanlı erişim kontrolüne sahip güvenli bir giriş sistemi</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Menü ve Kategori Yönetimi:</strong> Menü öğelerini ve kategorilerini oluşturmak, güncellemek ve düzenlemek için esnek bir sistem</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Masa Yönetimi:</strong> Masa durumunun (boş, dolu, rezerve) gerçek zamanlı takibi</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Sipariş Yönetimi:</strong> Yeni sipariş almaktan mevcut siparişleri takip etmeye ve sipariş detaylarını yönetmeye kadar eksiksiz bir sipariş işleme akışı</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Ödeme İşlemleri:</strong> Müşteri ödemelerini işleme ve fiş oluşturma işlevselliği</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 mb-3">Mimari:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Sunum Katmanı:</strong> Windows Forms ile geliştirilmiş kullanıcı dostu bir arayüz</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>İş Katmanı:</strong> Uygulama gereksinimlerini uygulamak için tüm iş mantığını, hizmetleri ve veri doğrulama kurallarını içerir</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Veri Erişim Katmanı:</strong> Veritabanı üzerinde bir soyutlama katmanı sağlayan Entity Framework Core ile Repository Deseni kullanarak tüm veritabanı etkileşimlerini yönetir</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Rent a Car API -->
-            <div class="bg-white border rounded-lg p-8 shadow-sm">
-              <div class="flex justify-between items-start mb-4">
-                <div>
-                  <h3 class="text-xl font-semibold text-slate-800 mb-2">
-                    Rent a Car API
-                  </h3>
-                  <p class="text-sm font-medium text-blue-600 mb-4">
-                    C#, ASP.NET Core, Web API, Onion Architecture, CQRS &
-                    Mediator
-                  </p>
+                    <!-- Rent a Car API -->
+                    <div class="bg-white border rounded-lg p-8 shadow-sm transition-all hover:shadow-lg hover:scale-[1.02]">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-slate-800 mb-2">Rent a Car API</h3>
+                                <p class="text-sm font-medium text-blue-600 mb-4">C#, ASP.NET Core, Web API, Onion Architecture, CQRS & Mediator</p>
+                            </div>
+                            <a href="https://github.com/ulusoyahmet/rentacar-api" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-all transform hover:scale-105">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                <span class="btn-text" data-en="View on GitHub" data-tr="GitHub'da Görüntüle">View on GitHub</span>
+                            </a>
+                        </div>
+                        <div class="project-desc-en">
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                A comprehensive backend system built with ASP.NET Core following Onion architecture principles and using CQRS and Mediator patterns for a clean, scalable, and maintainable codebase.
+                            </p>
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-slate-800 mb-3">Key Features:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Vehicle and Brand Management:</strong> Complete system for managing vehicle inventory including brand, model, images, mileage, fuel type, and transmission details</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Location-based Services:</strong> Functionality for managing different office locations where customers can pick up and return vehicles</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Dynamic Pricing Engine:</strong> Flexible module for defining and managing various pricing plans for vehicles (e.g., daily, weekly, monthly rates)</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Content Management System:</strong> Includes a blog platform with author and category management to enhance customer engagement and share company news</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Customer Feedback:</strong> Features for managing customer testimonials and handling contact messages sent through the platform</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Statistical Reporting:</strong> API endpoint providing key business metrics such as total vehicle count, available locations, average rental prices, and most popular car brands</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 mb-3">Architecture:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Presentation Layer (Web API):</strong> RESTful API built with ASP.NET Core Controllers that exposes all functionality to any client application</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Application Layer:</strong> Implements core business logic using CQRS and Mediator patterns. This separates read and write operations for a more organized and efficient application flow</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Data Access Layer:</strong> Manages all database interactions with Entity Framework Core</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Domain Layer:</strong> Contains the core business entities that define the fundamental structure of the application</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-desc-tr hidden">
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                Bu proje, modern bir araç kiralama platformuna güç vermek için ASP.NET Core ile oluşturulmuş kapsamlı bir arka uç sistemidir. Temiz, ölçeklenebilir ve sürdürülebilir bir kod tabanı oluşturmak için Onion mimari prensiplerini takip eder ve CQRS ve Mediator desenlerini kullanır.
+                            </p>
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-slate-800 mb-3">Temel Özellikler:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Araç ve Marka Yönetimi:</strong> Marka, model, resim, kilometre, yakıt tipi ve şanzıman gibi detayları içeren araç envanterini yönetmek için eksiksiz bir sistem</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Konum Tabanlı Hizmetler:</strong> Müşterilerin araçları alıp iade edebileceği farklı ofis konumlarını yönetme işlevselliği</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Dinamik Fiyatlandırma Motoru:</strong> Araçlar için çeşitli fiyatlandırma planlarını (örneğin günlük, haftalık, aylık ücretler) tanımlamak ve yönetmek için esnek bir modül</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>İçerik Yönetim Sistemi:</strong> Müşteri etkileşimini artırmak ve şirket haberlerini paylaşmak için yazar ve kategori yönetimine sahip bir blog platformu içerir</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Müşteri Geri Bildirimi:</strong> Müşteri referanslarını yönetme ve platform üzerinden gönderilen iletişim mesajlarını ele alma özellikleri</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>İstatistiksel Raporlama:</strong> Toplam araç sayısı, mevcut konumlar, ortalama kiralama fiyatları ve en popüler araba markaları gibi temel iş metriklerini sağlayan bir API uç noktası</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 mb-3">Mimari:</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Sunum Katmanı (Web API):</strong> Tüm işlevleri herhangi bir istemci uygulamasına sunan, ASP.NET Core Denetleyicileri ile oluşturulmuş bir RESTful API</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Uygulama Katmanı:</strong> CQRS ve Mediator desenlerini kullanarak temel iş mantığını uygular. Bu, okuma ve yazma işlemlerini ayırarak daha düzenli ve verimli bir uygulama akışı sağlar</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Veri Erişim Katmanı:</strong> Entity Framework Core ile tüm veritabanı etkileşimlerini yönetir</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        <span class="text-slate-600"><strong>Alan (Domain) Katmanı:</strong> Uygulamanın temel yapısını tanımlayan çekirdek iş varlıklarını içerir</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a
-                  href="https://github.com/ulusoyahmet/rentacar-api"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium rounded-lg transition-colors"
-                >
-                  <i class="fas fa-external-link-alt mr-2"></i>
-                  <span
-                    class="btn-text"
-                    data-en="View on GitHub"
-                    data-tr="GitHub'da Görüntüle"
-                    >View on GitHub</span
-                  >
-                </a>
-              </div>
-              <div class="project-desc-en">
-                <p class="text-slate-600 mb-4 leading-relaxed">
-                  A comprehensive backend system built with ASP.NET Core
-                  following Onion architecture principles and using CQRS and
-                  Mediator patterns for a clean, scalable, and maintainable
-                  codebase.
-                </p>
-                <div class="mb-6">
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Key Features:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Vehicle and Brand Management:</strong> Complete
-                        system for managing vehicle inventory including brand,
-                        model, images, mileage, fuel type, and transmission
-                        details</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Location-based Services:</strong> Functionality
-                        for managing different office locations where customers
-                        can pick up and return vehicles</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Dynamic Pricing Engine:</strong> Flexible
-                        module for defining and managing various pricing plans
-                        for vehicles (e.g., daily, weekly, monthly rates)</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Content Management System:</strong> Includes a
-                        blog platform with author and category management to
-                        enhance customer engagement and share company news</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Customer Feedback:</strong> Features for
-                        managing customer testimonials and handling contact
-                        messages sent through the platform</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Statistical Reporting:</strong> API endpoint
-                        providing key business metrics such as total vehicle
-                        count, available locations, average rental prices, and
-                        most popular car brands</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Architecture:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Presentation Layer (Web API):</strong> RESTful
-                        API built with ASP.NET Core Controllers that exposes all
-                        functionality to any client application</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Application Layer:</strong> Implements core
-                        business logic using CQRS and Mediator patterns. This
-                        separates read and write operations for a more organized
-                        and efficient application flow</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Data Access Layer:</strong> Manages all
-                        database interactions with Entity Framework Core</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Domain Layer:</strong> Contains the core
-                        business entities that define the fundamental structure
-                        of the application</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-desc-tr hidden">
-                <p class="text-slate-600 mb-4 leading-relaxed">
-                  Bu proje, modern bir araç kiralama platformuna güç vermek için
-                  ASP.NET Core ile oluşturulmuş kapsamlı bir arka uç sistemidir.
-                  Temiz, ölçeklenebilir ve sürdürülebilir bir kod tabanı
-                  oluşturmak için Onion mimari prensiplerini takip eder ve CQRS
-                  ve Mediator desenlerini kullanır.
-                </p>
-                <div class="mb-6">
-                  <h4 class="font-semibold text-slate-800 mb-3">
-                    Temel Özellikler:
-                  </h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Araç ve Marka Yönetimi:</strong> Marka, model,
-                        resim, kilometre, yakıt tipi ve şanzıman gibi detayları
-                        içeren araç envanterini yönetmek için eksiksiz bir
-                        sistem</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Konum Tabanlı Hizmetler:</strong> Müşterilerin
-                        araçları alıp iade edebileceği farklı ofis konumlarını
-                        yönetme işlevselliği</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Dinamik Fiyatlandırma Motoru:</strong> Araçlar
-                        için çeşitli fiyatlandırma planlarını (örneğin günlük,
-                        haftalık, aylık ücretler) tanımlamak ve yönetmek için
-                        esnek bir modül</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>İçerik Yönetim Sistemi:</strong> Müşteri
-                        etkileşimini artırmak ve şirket haberlerini paylaşmak
-                        için yazar ve kategori yönetimine sahip bir blog
-                        platformu içerir</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Müşteri Geri Bildirimi:</strong> Müşteri
-                        referanslarını yönetme ve platform üzerinden gönderilen
-                        iletişim mesajlarını ele alma özellikleri</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>İstatistiksel Raporlama:</strong> Toplam araç
-                        sayısı, mevcut konumlar, ortalama kiralama fiyatları ve
-                        en popüler araba markaları gibi temel iş metriklerini
-                        sağlayan bir API uç noktası</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-semibold text-slate-800 mb-3">Mimari:</h4>
-                  <ul class="space-y-2">
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Sunum Katmanı (Web API):</strong> Tüm işlevleri
-                        herhangi bir istemci uygulamasına sunan, ASP.NET Core
-                        Denetleyicileri ile oluşturulmuş bir RESTful API</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Uygulama Katmanı:</strong> CQRS ve Mediator
-                        desenlerini kullanarak temel iş mantığını uygular. Bu,
-                        okuma ve yazma işlemlerini ayırarak daha düzenli ve
-                        verimli bir uygulama akışı sağlar</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Veri Erişim Katmanı:</strong> Entity Framework
-                        Core ile tüm veritabanı etkileşimlerini yönetir</span
-                      >
-                    </li>
-                    <li class="flex items-start">
-                      <div
-                        class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"
-                      ></div>
-                      <span class="text-slate-600"
-                        ><strong>Alan (Domain) Katmanı:</strong> Uygulamanın
-                        temel yapısını tanımlayan çekirdek iş varlıklarını
-                        içerir</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- Certifications -->
-    <section class="py-16 px-6 bg-white">
-      <div class="container mx-auto">
-        <div class="max-w-4xl mx-auto">
-          <h2
-            class="text-3xl font-bold text-slate-800 mb-12 text-center section-title"
-            data-en="Certifications & Courses"
-            data-tr="Sertifikalar & Kurslar"
-          >
-            Certifications & Courses
-          </h2>
-          <div class="grid md:grid-cols-2 gap-4">
-              <div class="bg-white border rounded-lg p-4 shadow-sm">
-                <div class="flex items-start">
-                  <i
-                    class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                  ></i>
-                  <span class="text-slate-700"
-                    >Istanbul Eğitim Akademi Full Stack Developer Bootcamp</span
-                  >
+    <section class="py-16 px-6 bg-white fade-in">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-800 mb-12 text-center section-title" 
+                    data-en="Certifications & Courses" 
+                    data-tr="Sertifikalar & Kurslar">Certifications & Courses</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">C# ile Algoritma ve Programlama 101, 102 - Geleceği Yazanlar</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">ASP.NET Core MVC 101, 102 - Geleceği Yazanlar</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">Spring Boot 3, Spring 6 & Hibernate for Beginners by Chad Darby</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">Istanbul Eğitim Akademi Full Stack Developer Bootcamp</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">ASP.NET Core API - Rapid API and API Consume by Murat Yücedağ</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">ASP.NET Core API 8.0 Onion Architecture by Murat Yücedağ</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border rounded-lg p-4 shadow-sm transition-all hover:shadow-md hover:scale-105">
+                        <div class="flex items-start">
+                            <i class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-700">Python Sıfırdan İleri Seviye Programlama by Mustafa Murat Çoşkun</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex items-start">
-                <i
-                  class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                ></i>
-                <span class="text-slate-700"
-                  >C# ile Algoritma ve Programlama 101, 201 - Geleceği
-                  Yazanlar</span
-                >
-              </div>
             </div>
-            
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex items-start">
-                <i
-                  class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                ></i>
-                <span class="text-slate-700"
-                  >ASP.NET Core MVC 101, 201 - Geleceği Yazanlar</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex items-start">
-                <i
-                  class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                ></i>
-                <span class="text-slate-700"
-                  >Spring Boot 3, Spring 6 & Hibernate for Beginners by Chad
-                  Darby</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex items-start">
-                <i
-                  class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                ></i>
-                <span class="text-slate-700"
-                  >ASP.NET Core API - Rapid API and API Consume by Murat
-                  Yücedağ</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex items-start">
-                <i
-                  class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                ></i>
-                <span class="text-slate-700"
-                  >SQL İle Veritabanı Sorgulama 101, 201 - Geleceği
-                  Yazanlar</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex items-start">
-                <i
-                  class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                ></i>
-                <span class="text-slate-700"
-                  >ASP.NET Core API 8.0 Onion Architecture by Murat
-                  Yücedağ</span
-                >
-              </div>
-            </div>
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex items-start">
-                <i
-                  class="fas fa-certificate text-green-600 mr-3 mt-1 flex-shrink-0"
-                ></i>
-                <span class="text-slate-700"
-                  >Python Sıfırdan İleri Seviye Programlama by Mustafa Murat
-                  Çoşkun</span
-                >
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-slate-800 text-white py-8 px-6">
-      <div class="container mx-auto text-center">
-        <p
-          class="text-slate-300 footer-text"
-          data-en="© 2025 Ahmet Ulusoy. Built with HTML, CSS, and JavaScript."
-          data-tr="© 2025 Ahmet Ulusoy. HTML, CSS ve JavaScript ile geliştirildi."
-        >
-          © 2025 Ahmet Ulusoy. Built with HTML, CSS, and JavaScript.
-        </p>
-      </div>
+        <div class="container mx-auto text-center">
+            <p class="text-slate-300 footer-text" 
+               data-en="© 2025 Ahmet Ulusoy. Built with HTML, CSS, and JavaScript." 
+               data-tr="© 2025 Ahmet Ulusoy. HTML, CSS ve JavaScript ile geliştirildi.">
+               © 2025 Ahmet Ulusoy. Built with HTML, CSS, and JavaScript.
+            </p>
+        </div>
     </footer>
 
     <script>
-      let currentLanguage = "en";
+        let currentLanguage = 'en';
 
-      function switchLanguage(lang) {
-        currentLanguage = lang;
-
-        // Update language buttons
-        document
-          .getElementById("lang-en")
-          .classList.toggle("active", lang === "en");
-        document
-          .getElementById("lang-tr")
-          .classList.toggle("active", lang === "tr");
-
-        // Update all elements with data attributes
-        const elements = document.querySelectorAll("[data-en][data-tr]");
-        elements.forEach((element) => {
-          if (element.getAttribute("data-" + lang)) {
-            element.textContent = element.getAttribute("data-" + lang);
-          }
-        });
-
-        // Handle about text sections
-        const aboutTextEn = document.querySelector(".about-text-en");
-        const aboutTextTr = document.querySelector(".about-text-tr");
-
-        if (lang === "en") {
-          aboutTextEn.classList.remove("hidden");
-          aboutTextTr.classList.add("hidden");
-        } else {
-          aboutTextEn.classList.add("hidden");
-          aboutTextTr.classList.remove("hidden");
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update language buttons
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
+            
+            // Update all elements with data attributes
+            const elements = document.querySelectorAll('[data-en][data-tr]');
+            elements.forEach(element => {
+                if (element.getAttribute('data-' + lang)) {
+                    element.textContent = element.getAttribute('data-' + lang);
+                }
+            });
+            
+            // Handle about text sections
+            const aboutTextEn = document.querySelector('.about-text-en');
+            const aboutTextTr = document.querySelector('.about-text-tr');
+            
+            if (lang === 'en') {
+                aboutTextEn.classList.remove('hidden');
+                aboutTextTr.classList.add('hidden');
+            } else {
+                aboutTextEn.classList.add('hidden');
+                aboutTextTr.classList.remove('hidden');
+            }
+            
+            // Handle project descriptions
+            const projectDescEn = document.querySelectorAll('.project-desc-en');
+            const projectDescTr = document.querySelectorAll('.project-desc-tr');
+            
+            projectDescEn.forEach(el => {
+                if (lang === 'en') {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            
+            projectDescTr.forEach(el => {
+                if (lang === 'tr') {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
         }
 
-        // Handle project descriptions
-        const projectDescEn = document.querySelectorAll(".project-desc-en");
-        const projectDescTr = document.querySelectorAll(".project-desc-tr");
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
 
-        projectDescEn.forEach((el) => {
-          if (lang === "en") {
-            el.classList.remove("hidden");
-          } else {
-            el.classList.add("hidden");
-          }
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
         });
 
-        projectDescTr.forEach((el) => {
-          if (lang === "tr") {
-            el.classList.remove("hidden");
-          } else {
-            el.classList.add("hidden");
-          }
+        // Navbar transparency and scroll effects
+        function updateNavbar() {
+            const navbar = document.querySelector('.navbar');
+            const scrolled = window.scrollY > 50;
+            
+            if (scrolled) {
+                navbar.classList.add('scrolled');
+                navbar.classList.remove('transparent');
+            } else {
+                navbar.classList.remove('scrolled');
+                navbar.classList.add('transparent');
+            }
+        }
+
+        // Update active navigation item based on scroll position
+        function updateActiveNavigation() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Fade in animation for sections
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
 
-        // Update HTML lang attribute
-        document.documentElement.lang = lang;
-      }
-
-      function toggleMobileMenu() {
-        const menu = document.getElementById("mobile-menu");
-        menu.classList.toggle("hidden");
-      }
-
-      // Close mobile menu when clicking on a link
-      document.querySelectorAll("#mobile-menu a").forEach((link) => {
-        link.addEventListener("click", () => {
-          document.getElementById("mobile-menu").classList.add("hidden");
-        });
-      });
-
-      // Update active navigation item based on scroll position
-      window.addEventListener("scroll", () => {
-        const sections = document.querySelectorAll("section[id]");
-        const navLinks = document.querySelectorAll(".nav-item");
-
-        let current = "";
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (scrollY >= sectionTop - 200) {
-            current = section.getAttribute("id");
-          }
+        // Event listeners
+        window.addEventListener('scroll', () => {
+            updateNavbar();
+            updateActiveNavigation();
+            animateOnScroll();
         });
 
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
+        // Initialize animations on page load
+        window.addEventListener('load', () => {
+            updateNavbar();
+            animateOnScroll();
         });
-      });
     </script>
-  </body>
+</body>
 </html>
+
